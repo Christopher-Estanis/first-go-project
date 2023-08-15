@@ -21,19 +21,16 @@ func Create(res http.ResponseWriter, req *http.Request) {
 
 	id, err := models.Create(todo)
 
-	var resp map[string]any
-
 	if err != nil {
-		resp = map[string]any{
-			"Error":   true,
-			"Message": fmt.Sprintf("Ocorreu um erro ao tentar inserir: %v", err),
-		}
-	} else {
-		resp = map[string]any{
-			"Error":   false,
-			"Message": fmt.Sprintf("Todo inserido com sucesso!"),
-			"Id":      fmt.Sprintf("%d", id),
-		}
+		log.Printf("Ocorreu um erro ao tentar inserir: %v", err)
+		http.Error(res, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	resp := map[string]any{
+		"Error":   false,
+		"Message": fmt.Sprintf("Todo inserido com sucesso!"),
+		"Id":      fmt.Sprintf("%d", id),
 	}
 
 	res.Header().Add("Content-type", "application/json")

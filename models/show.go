@@ -2,7 +2,7 @@ package models
 
 import "example/db"
 
-func Show(id string) (todo Todo, err error) {
+func Show(id int64) (todo Todo, err error) {
 	connection, err := db.OpenConnection()
 	if err != nil {
 		return

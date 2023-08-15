@@ -2,7 +2,7 @@ package models
 
 import "example/db"
 
-func List(id string) (todos []Todo, err error) {
+func List() (todos []Todo, err error) {
 	connection, err := db.OpenConnection()
 	if err != nil {
 		return
